@@ -12,14 +12,14 @@
       </div>
       <div class="icon-message ml-10">
         Message
-      </div> 
+      </div>
       <div class="icon-bell ml-10">
         Bell
-      </div> 
+      </div>
       <div class="icon-profile ml-10">
         Bessie Cooper
         photo-image
-      </div> 
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +35,6 @@ export default {
   width: 100%;
   background: gold;
   height: 46px;
-  box-shadow: 0 0 20px rgb(234, 207, 207);
   display: flex;
   align-items: center;
 }

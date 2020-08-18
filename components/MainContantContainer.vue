@@ -4,7 +4,7 @@
 
       <div class="title-of-container">
         <h1>Rent</h1>
-        <Select/>
+        <Select :typeOfVehicles='typeOfVehicles'/>
         <div class="add-button-box blue">
           Add new
           <div class='btn'>+</div>
@@ -12,11 +12,11 @@
       </div>
 
 
-      <p v-if="$fetchState.pending">Fetching info...</p>
-      <p v-else-if="$fetchState.error"> <Error @fetch="this.$fetch"/> </p>
+      <p v-if="$fetchState.pending"> <Loader /></p>
+      <p v-else-if="$fetchState.error"> <Error @fetch="$fetch"/> </p>
 
       <div class="card-container">
-        <Card v-for="card of cards" :key="card.id"/>
+        <Card v-for="vehicle of vehicles" :vehicle="vehicle" :key="vehicle.id"/>
       </div>
 
 
@@ -26,14 +26,30 @@
 
 
 <script>
-import getVehicles from '@/api/request' 
-
 export default {
-  data:() => ({
-    cards:null
-  }),
-  async fetch() {
-  this.cards = await getVehicles()
+  data:() => ({}),
+  async fetch(){
+    try{
+      await this.$store.dispatch('vehicles/fetch')
+    } catch (e){
+      throw e
+    }
+  },
+  computed:{
+    vehicles(){
+      return this.$store.getters['vehicles/vehicles']
+    },
+    typeOfVehicles(){
+      let id = 0
+      const result = Array.from(new Set(this.vehicles.map(vehicles => vehicles.type))).map(v => {
+        id++
+        return {id:id, name:v}
+        })
+
+      return result
+    }
+
+
   }
 }
 </script>
@@ -58,9 +74,10 @@ export default {
 
 .add-button-box {
   flex: 1 0 auto;
-  justify-content: end;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
+  font-weight: 700;
 }
 
 .btn {
@@ -71,7 +88,6 @@ export default {
   color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
   border-radius: 40%;
   margin-left: 15px;
 }

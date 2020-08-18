@@ -2,12 +2,12 @@
   <div class="card">
     <div class="container">
       <div class="image-container">
-        <img src="https://loremflickr.com/160/160/airship?random=5f2bb90af01f47feb86b5da0">
+        <img :src=vehicle.preview>
       </div>
       <div class="text-container">
-        <div class="title">NAME</div>
-        <div class="description">Brief description of the project, in a few lines.</div>
-        <div class="price">160$/h</div>
+        <div class="title">{{vehicle.name}}</div>
+        <div class="description">{{vehicle.description}}</div>
+        <div class="price">{{vehicle.rent}}$</div>
       </div>
     </div>
   </div>
@@ -16,7 +16,11 @@
 
 <script>
 export default {
-
+  props:{
+    vehicle:{
+      type:Object
+    }
+  },
 }
 </script>
 
