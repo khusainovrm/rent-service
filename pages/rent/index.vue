@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <MainContantContainer />
+  <div class="container">
+    rent a boat
   </div>
 </template>
 

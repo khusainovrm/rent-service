@@ -5,7 +5,9 @@
         <img :src=vehicle.preview>
       </div>
       <div class="text-container">
-        <div class="title">{{vehicle.name}}</div>
+        <a href="#" @click.prevent="openRent(vehicle.id)">
+          <div class="title">{{vehicle.name}}</div>
+        </a>
         <div class="description">{{vehicle.description}}</div>
         <div class="price">{{vehicle.rent}}$</div>
       </div>
@@ -21,6 +23,11 @@ export default {
       type:Object
     }
   },
+  methods:{
+    openRent(id){
+      this.$router.push('/rent/'+id)
+    }
+  }
 }
 </script>
 
@@ -28,22 +35,22 @@ export default {
 .card{
   background: white;
   border-radius: 30px;
-  max-width: calc(100%/3-10px);
-  margin: 10px;
+  margin: 5px;
 }
 
 .container{
   display: flex;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .image-container{
-
 }
 
 img {
-  border-radius: 25px;
+  border-radius: 5px;
+  height: 88px;
+  width: 88px;
 
 }
 
@@ -68,3 +75,4 @@ img {
 }
 
 </style>
+

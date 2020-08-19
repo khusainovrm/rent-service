@@ -4,7 +4,7 @@
 
       <div class="title-of-container">
         <h1>Rent</h1>
-        <Select :typeOfVehicles='typeOfVehicles'/>
+        <Select @selected="selected"/>
         <div class="add-button-box blue">
           Add new
           <div class='btn'>+</div>
@@ -16,7 +16,7 @@
       <p v-else-if="$fetchState.error"> <Error @fetch="$fetch"/> </p>
 
       <div class="card-container">
-        <Card v-for="vehicle of vehicles" :vehicle="vehicle" :key="vehicle.id"/>
+        <Card v-for="vehicle of selectedVehicle" :vehicle="vehicle" :key="vehicle.id"/>
       </div>
 
 
@@ -39,17 +39,21 @@ export default {
     vehicles(){
       return this.$store.getters['vehicles/vehicles']
     },
-    typeOfVehicles(){
-      let id = 0
-      const result = Array.from(new Set(this.vehicles.map(vehicles => vehicles.type))).map(v => {
-        id++
-        return {id:id, name:v}
-        })
+    selectedVehicle(){
+      const type =  this.$store.getters['vehicles/selectedType']
+      const types = this.$store.getters['vehicles/typeOfVehicles']
 
-      return result
+      if (types.includes(type)) {
+        return this.$store.getters['vehicles/vehicles'].filter(vehicle => vehicle.type === type)
+      }
+
+      return this.$store.getters['vehicles/vehicles']
     }
-
-
+  },
+  methods:{
+    selected(type){
+     this.$store.dispatch('vehicles/setType', type)
+    }
   }
 }
 </script>
@@ -97,8 +101,8 @@ export default {
 }
 
 .card-container{
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 </style>
